@@ -1,0 +1,51 @@
+module.exports=(sequelize,DataType)=>{
+    const OffreStages=sequelize.define("OffreStages",
+    {
+        offreStageId:{
+            type:DataType.INTEGER,
+            primaryKey:true,
+            autoIncrement:true
+        },
+        titre:{
+            type:DataType.STRING,
+            allowNull:false
+        },
+        description:{
+            type:DataType.TEXT,
+            allowNull:false
+        },
+        skills:{
+            type:DataType.JSON,
+            allowNull:false,
+            defaultValue:[]
+        },
+        departement:{
+            type:DataType.STRING,
+            allowNull:false
+        },
+        nombrePlace:{
+            type:DataType.INTEGER,
+            allowNull:false
+        },
+        dateDebut:{
+            type:DataType.DATEONLY,
+            allowNull:false
+        },
+        dateFin:{
+            type:DataType.DATEONLY,
+            allowNull:false
+        },
+        encadrantId:{
+            type:DataType.INTEGER,
+            references:{
+                model:'Users',
+                key:'userId'
+            }
+        }
+    },
+    {
+        timestamps: true
+    });
+
+    return OffreStages;
+};
