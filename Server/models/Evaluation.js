@@ -1,5 +1,5 @@
 module.exports=(sequelize,DataType)=>{
-    const Evaluations=sequelize.define("Evaluations",
+    const Evaluation=sequelize.define("Evaluation",
     {
         evaluationId:{
             type:DataType.INTEGER,
@@ -8,10 +8,11 @@ module.exports=(sequelize,DataType)=>{
         },
         dossierStageId:{
             type:DataType.INTEGER,
-            references:{
-                model:'DossierStages',
-                key:'dossierStageId'
-            }
+            allowNull:false
+        },
+        encadrantId: {  
+            type: DataType.INTEGER,
+            allowNull: false
         },
         noteTechnique:{
             type:DataType.DECIMAL
@@ -32,5 +33,17 @@ module.exports=(sequelize,DataType)=>{
         timestamps: true
     });
 
-    return Evaluations;
+    /*---Association---- */
+    Evaluation.associate = models => {
+    Evaluation.belongsTo(models.User, {
+      foreignKey: 'encadrantId'
+    });
+
+    Evaluation.belongsTo(models.DossierStage, {
+      foreignKey: 'dossierStageId'
+    });
+  };
+
+
+    return Evaluation;
 };

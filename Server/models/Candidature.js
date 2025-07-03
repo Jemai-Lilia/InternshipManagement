@@ -1,5 +1,5 @@
 module.exports=(sequelize,DataType)=>{
-    const Candidatures=sequelize.define("Candidatures",
+    const Candidature=sequelize.define("Candidature",
     {
         candidatureId:{
             type:DataType.INTEGER,
@@ -40,7 +40,6 @@ module.exports=(sequelize,DataType)=>{
             allowNull:false,
             defaultValue:'En Attente'
         },
-        candid
     },
     {
         timestamps: true,
@@ -52,5 +51,17 @@ module.exports=(sequelize,DataType)=>{
         ]
     });
 
-    return Candidatures;
+    /*----Association-----*/
+    Candidature.associate=(models)=>{
+        Candidature.belongsTo(models.User,{
+            foreignKey:'stagiaireId',
+            onDelete:'cascade'
+        });
+        Candidature.belongsTo(models.OffreStage,{
+            foreignKey:'offreStageId',
+            onDelete:'cascade'
+        })
+    }
+
+    return Candidature;
 };

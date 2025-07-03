@@ -1,5 +1,5 @@
 module.exports=(sequelize,DataType)=>{
-    const OffreStages=sequelize.define("OffreStages",
+    const OffreStage=sequelize.define("OffreStage",
     {
         offreStageId:{
             type:DataType.INTEGER,
@@ -47,5 +47,23 @@ module.exports=(sequelize,DataType)=>{
         timestamps: true
     });
 
-    return OffreStages;
+    /* ----Association---- */
+    OffreStage.associate=models=>{
+        OffreStage.belongsTo(models.User,{
+            foreignKey:'encadrantId',
+            onDelete:"cascade"
+        });
+        OffreStage.hasMany(models.Candidature,{
+            foreignKey:'offreStageId',
+            onDelete:"cascade"
+        });
+        OffreStage.hasMany(models.DossierStage,{
+            foreignKey:'offreStageId',
+            onDelete:"cascade"
+        });
+
+
+    };
+
+    return OffreStage;
 };

@@ -1,5 +1,5 @@
 module.exports=(sequelize,DataType)=>{
-    const DossierStages=sequelize.define("DossierStages",
+    const DossierStage =sequelize.define("DossierStage",
     {
         dossierId:{
             type:DataType.INTEGER,
@@ -52,5 +52,25 @@ module.exports=(sequelize,DataType)=>{
          timestamps: true
     });
 
-    return DossierStages;
+    /*---Association----- */ 
+    DossierStage.associate = models => {
+       DossierStage.belongsTo(models.User, {
+        foreignKey: 'stagiaireId',
+       });
+
+       DossierStage.belongsTo(models.User, {
+        foreignKey: 'encadrantId',
+       });
+
+       DossierStage.belongsTo(models.OffreStage, {
+        foreignKey: 'offreId'
+       });
+
+       DossierStage.hasOne(models.Evaluation, {
+        foreignKey: 'dossierId',
+        onDelete: 'CASCADE'
+       });
+    }
+
+    return DossierStage;
 };
