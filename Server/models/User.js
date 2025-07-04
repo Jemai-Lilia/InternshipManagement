@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         cin: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(8),
             allowNull: false,
             unique: true
         },
